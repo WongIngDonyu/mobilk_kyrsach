@@ -39,7 +39,7 @@ class PhotoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (allPermissionsGranted()) {
+        if (permissionsGranted()) {
             startCamera()
         } else {
             requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
@@ -100,6 +100,7 @@ class PhotoFragment : Fragment() {
         startCamera()
     }
 
+
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
         val photoFile = File(
@@ -107,9 +108,7 @@ class PhotoFragment : Fragment() {
             "photo_${System.currentTimeMillis()}.jpg"
         )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-        imageCapture.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(requireContext()),
+        imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(requireContext()),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(e: ImageCaptureException) {
                     Log.e(TAG, "Ошибка съемки: ${e.message}", e)
@@ -132,14 +131,13 @@ class PhotoFragment : Fragment() {
         }, 100)
     }
 
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            requireContext(), it ) == PackageManager.PERMISSION_GRANTED
+    private fun permissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(requireContext(), it ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
+            if (permissionsGranted()) {
                 startCamera()
             } else {
                 Toast.makeText(

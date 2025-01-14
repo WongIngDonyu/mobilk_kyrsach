@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.kyrsach.databinding.FragmentGalleryBinding
 import java.io.File
 
@@ -16,7 +15,7 @@ class GalleryFragment : Fragment() {
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding?: throw IllegalStateException("Binding is not initialized")
     private val mediaFiles = mutableListOf<File>()
-    private lateinit var mediaAdapter: MediaAdapter
+    private lateinit var galleryAdapter: GalleryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,11 +28,10 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadMediaFiles()
-        mediaAdapter = MediaAdapter(mediaFiles, ::onMediaClick)
+        galleryAdapter = GalleryAdapter(mediaFiles, ::onMediaClick)
 
         binding.recyclerView.apply {
-            layoutManager = GridLayoutManager(requireContext(), 3)
-            adapter = mediaAdapter
+            adapter = galleryAdapter
         }
 
         binding.backButton.setOnClickListener {

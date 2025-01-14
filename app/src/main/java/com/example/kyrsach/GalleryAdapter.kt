@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MediaAdapter(private val mediaFiles: List<File>, private val onClick: (File) -> Unit) : RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
+class GalleryAdapter(private val mediaFiles: List<File>, private val onClick: (File) -> Unit) : RecyclerView.Adapter<GalleryAdapter.MediaViewHolder>() {
 
     class MediaViewHolder(private val binding: ItemMediaBinding) : RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.Q)
@@ -52,3 +52,4 @@ class MediaAdapter(private val mediaFiles: List<File>, private val onClick: (Fil
         holder.bind(file, onClick)
     }
 }
+

@@ -127,7 +127,7 @@ class MediaViewerFragment : Fragment() {
             updateSeekBar()
         }
         isPlay = !isPlay
-        updateSeekBar() //без этого после изменения sekbara в паузе он не будет норм отрабатывать
+        updateSeekBar()
     }
 
     override fun onDestroyView() {

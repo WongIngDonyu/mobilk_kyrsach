@@ -40,7 +40,7 @@ class VideoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (allPermissionsGranted()) {
+        if (permissionsGranted()) {
             startCamera()
         } else {
             requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
@@ -175,13 +175,13 @@ class VideoFragment : Fragment() {
     }
 
 
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+    private fun permissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
+            if (permissionsGranted()) {
                 startCamera()
             } else {
                 Toast.makeText(requireContext(), "Необходимо разрешение для использования камеры", Toast.LENGTH_SHORT).show()
